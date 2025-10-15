@@ -31,7 +31,7 @@ class MasterOptimizer:
         
     def run_system_info(self):
         """Get system specifications"""
-        logger.info("🔍 Gathering system information...")
+        logger.info("Gathering system information...")
         
         try:
             result = subprocess.run([
@@ -39,7 +39,7 @@ class MasterOptimizer:
             ], capture_output=True, text=True, timeout=300)
             
             if result.returncode == 0:
-                logger.info("✅ System information gathered successfully")
+                logger.info("System information gathered successfully")
                 
                 # Load the saved specs
                 specs_file = Path("/workspace/system_specs.json")
@@ -49,16 +49,16 @@ class MasterOptimizer:
                         
                 return True
             else:
-                logger.error(f"❌ System info failed: {result.stderr}")
+                logger.error(f"System info failed: {result.stderr}")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ System info error: {e}")
+            logger.error(f"System info error: {e}")
             return False
     
     def optimize_llm(self, model: str = "microsoft/DialoGPT-small", quantization: str = "int8"):
         """Optimize LLM model"""
-        logger.info(f"🤖 Optimizing LLM: {model} with {quantization} quantization...")
+        logger.info(f"Optimizing LLM: {model} with {quantization} quantization...")
         
         try:
             cmd = [
@@ -72,7 +72,7 @@ class MasterOptimizer:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
             
             if result.returncode == 0:
-                logger.info("✅ LLM optimization completed successfully")
+                logger.info("LLM optimization completed successfully")
                 
                 # Load results
                 results_file = self.output_dir / f"llm_optimization_results_{quantization}.json"
@@ -82,18 +82,18 @@ class MasterOptimizer:
                         
                 return True
             else:
-                logger.error(f"❌ LLM optimization failed: {result.stderr}")
+                logger.error(f"LLM optimization failed: {result.stderr}")
                 self.results['llm_optimization'] = {"error": result.stderr}
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ LLM optimization error: {e}")
+            logger.error(f"LLM optimization error: {e}")
             self.results['llm_optimization'] = {"error": str(e)}
             return False
     
     def optimize_stable_diffusion(self, model: str = "runwayml/stable-diffusion-v1-5", precision: str = "fp16"):
         """Optimize Stable Diffusion model"""
-        logger.info(f"🎨 Optimizing Stable Diffusion: {model} with {precision} precision...")
+        logger.info(f"Optimizing Stable Diffusion: {model} with {precision} precision...")
         
         try:
             cmd = [
@@ -106,7 +106,7 @@ class MasterOptimizer:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=2400)
             
             if result.returncode == 0:
-                logger.info("✅ Stable Diffusion optimization completed successfully")
+                logger.info("Stable Diffusion optimization completed successfully")
                 
                 # Load results
                 results_file = self.output_dir / f"sd_optimization_results_{precision}.json"
@@ -116,19 +116,19 @@ class MasterOptimizer:
                         
                 return True
             else:
-                logger.error(f"❌ Stable Diffusion optimization failed: {result.stderr}")
+                logger.error(f"Stable Diffusion optimization failed: {result.stderr}")
                 self.results['stable_diffusion_optimization'] = {"error": result.stderr}
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Stable Diffusion optimization error: {e}")
+            logger.error(f"Stable Diffusion optimization error: {e}")
             self.results['stable_diffusion_optimization'] = {"error": str(e)}
             return False
     
     def optimize_text_encoder(self, model: str = "sentence-transformers/all-MiniLM-L6-v2", 
                             model_type: str = "sentence_transformer"):
         """Optimize text encoder model"""
-        logger.info(f"📝 Optimizing Text Encoder: {model} ({model_type})...")
+        logger.info(f"Optimizing Text Encoder: {model} ({model_type})...")
         
         try:
             cmd = [
@@ -142,7 +142,7 @@ class MasterOptimizer:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=1200)
             
             if result.returncode == 0:
-                logger.info("✅ Text encoder optimization completed successfully")
+                logger.info("Text encoder optimization completed successfully")
                 
                 # Load results
                 results_file = self.output_dir / f"text_encoder_optimization_results_{model_type}.json"
@@ -152,18 +152,18 @@ class MasterOptimizer:
                         
                 return True
             else:
-                logger.error(f"❌ Text encoder optimization failed: {result.stderr}")
+                logger.error(f"Text encoder optimization failed: {result.stderr}")
                 self.results['text_encoder_optimization'] = {"error": result.stderr}
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Text encoder optimization error: {e}")
+            logger.error(f"Text encoder optimization error: {e}")
             self.results['text_encoder_optimization'] = {"error": str(e)}
             return False
     
     def optimize_audio_model(self, model: str = "facebook/wav2vec2-base-960h", precision: str = "fp32"):
         """Optimize audio embedding model"""
-        logger.info(f"🔊 Optimizing Audio Model: {model} with {precision} precision...")
+        logger.info(f"Optimizing Audio Model: {model} with {precision} precision...")
         
         try:
             cmd = [
@@ -177,7 +177,7 @@ class MasterOptimizer:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
             
             if result.returncode == 0:
-                logger.info("✅ Audio model optimization completed successfully")
+                logger.info("Audio model optimization completed successfully")
                 
                 # Load results
                 results_file = self.output_dir / f"audio_optimization_results_{precision}.json"
@@ -187,18 +187,18 @@ class MasterOptimizer:
                         
                 return True
             else:
-                logger.error(f"❌ Audio optimization failed: {result.stderr}")
+                logger.error(f"Audio optimization failed: {result.stderr}")
                 self.results['audio_optimization'] = {"error": result.stderr}
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Audio optimization error: {e}")
+            logger.error(f"Audio optimization error: {e}")
             self.results['audio_optimization'] = {"error": str(e)}
             return False
     
     def run_parallel_optimizations(self, tasks: list):
         """Run optimizations in parallel where possible"""
-        logger.info("🚀 Running optimizations in parallel...")
+        logger.info("Running optimizations in parallel...")
         
         results = {}
         with ThreadPoolExecutor(max_workers=2) as executor:  # Limit to 2 to avoid GPU memory conflicts
@@ -213,16 +213,16 @@ class MasterOptimizer:
                 try:
                     result = future.result()
                     results[task_name] = result
-                    logger.info(f"✅ {task_name} completed: {'Success' if result else 'Failed'}")
+                    logger.info(f"{task_name} completed: {'Success' if result else 'Failed'}")
                 except Exception as e:
-                    logger.error(f"❌ {task_name} failed with exception: {e}")
+                    logger.error(f"{task_name} failed with exception: {e}")
                     results[task_name] = False
         
         return results
     
     def generate_performance_report(self):
         """Generate comprehensive performance report"""
-        logger.info("📊 Generating performance report...")
+        logger.info("Generating performance report...")
         
         report = {
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
@@ -283,14 +283,14 @@ class MasterOptimizer:
         with open(all_results_file, 'w') as f:
             json.dump(self.results, f, indent=2)
         
-        logger.info(f"📊 Performance report saved to: {report_file}")
-        logger.info(f"📁 All results saved to: {all_results_file}")
+        logger.info(f"Performance report saved to: {report_file}")
+        logger.info(f"All results saved to: {all_results_file}")
         
         return report
     
     def run_complete_optimization_suite(self, models_config: dict = None):
         """Run complete optimization suite for all model types"""
-        logger.info("🚀 Starting complete ML model optimization suite...")
+        logger.info("Starting complete ML model optimization suite...")
         
         if models_config is None:
             models_config = {
@@ -319,13 +319,13 @@ class MasterOptimizer:
         
         # Run optimizations sequentially to avoid memory issues
         for opt_name, opt_func, opt_args in optimizations:
-            logger.info(f"🔄 Running {opt_name} optimization...")
+            logger.info(f"Running {opt_name} optimization...")
             success = opt_func(*opt_args)
             
             if success:
-                logger.info(f"✅ {opt_name} optimization completed successfully")
+                logger.info(f" {opt_name} optimization completed successfully")
             else:
-                logger.warning(f"⚠️ {opt_name} optimization failed, continuing with others...")
+                logger.warning(f"{opt_name} optimization failed, continuing with others...")
             
             # Clear GPU cache between optimizations
             if torch.cuda.is_available():
@@ -337,9 +337,9 @@ class MasterOptimizer:
         total_time = time.time() - start_time
         
         logger.info("=" * 80)
-        logger.info("🎉 OPTIMIZATION SUITE COMPLETED!")
-        logger.info(f"⏱️ Total time: {total_time/60:.2f} minutes")
-        logger.info(f"📊 Report saved to: {self.output_dir}/comprehensive_optimization_report.json")
+        logger.info("OPTIMIZATION SUITE COMPLETED!")
+        logger.info(f"Total time: {total_time/60:.2f} minutes")
+        logger.info(f"Report saved to: {self.output_dir}/comprehensive_optimization_report.json")
         logger.info("=" * 80)
         
         return report
